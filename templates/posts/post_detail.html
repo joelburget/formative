@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block header %}
+{% autoescape off %}
+{{ object.additional_header }}
+{% endautoescape %}
+{% for sf in object.style_files.all %}
+<link rel="stylesheet" type="text/css" href="{{ sf.file.url }}" media="{{ sf.media }}" />
+{% endfor %}
+{% autoescape off %}
+<style>
+{{ object.style }}
+</style>
+{% endautoescape %}
+{% endblock %}
+
+{% block content %}
+{% if object.information %}
+<h1 id="title">{{ object.title }}</h1>
+<h6 id="published">Published: {{ object.published|date:"F jS" }}</h6>
+<h6 id="last_edited">Last Edited: {{ object.last_edited|date:"F jS" }}</h6>
+{% endif %}
+{% if object.guest_author %}
+<h6 id="guest_author">By {{ object.guest_author }}</h6>
+{% endif %}
+{% autoescape off %}
+{% if object.body_highlighted %}
+    {{ object.body_highlighted }}
+{% else %}
+    {{ object.body }}
+{% endif %}
+{% endautoescape %}
+{% endblock %}
+
+{% block script %}
+{% for sf in object.script_files.all %}
+<script src="{{ sf.file.url }}"></script>
+{% endfor %}
+{% autoescape off %}
+<script>
+{{ object.script }}
+</script>
+{% endautoescape %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_modify adminmedia %}
+
+{% block extrahead %}
+<link type="text/css" href="/media/jquery-ui/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../../../jsi18n/"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+<script src="/media/codemirror/js/codemirror.js" type="text/javascript"></script>
+<script src="/media/codemirror/js/mirrorframe.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $('textarea').attr({
+      cols: '120',
+      rows: '30'
+   });
+   var editor1 = CodeMirror.fromTextArea('id_style', {
+     parserfile: "parsecss.js",
+     path: "/media/codemirror/js/",
+     stylesheet: "/media/codemirror/css/csscolors.css"
+   });
+   var editor2 = new CodeMirror.fromTextArea('id_script', {
+     parserfile: ["tokenizejavascript.js", "parsejavascript.js"],
+     path: "/media/codemirror/js/",
+     stylesheet: "/media/codemirror/css/jscolors.css"
+   });
+   var editor3 = new CodeMirror.fromTextArea('id_body', {
+     parserfile: "parsexml.js",
+     path: "/media/codemirror/js/",
+     stylesheet: "/media/codemirror/css/xmlcolors.css"
+   });
+   $('#id_additional_header').addClass('ui-widget-content').width(600).height(100).resizable();
+});
+</script>
+<!--<script src="/media/codepress/codepress.js" type="text/javascript"></script>-->
+{{ media }}
+<style type="text/css">
+.ui-widget-content{
+	padding-right: 20px;
+	padding-bottom: 20px;
+}
+iframe {
+	border: 1px grey solid !important;
+}
+.CodeMirror-line-numbers {
+width: 2.2em;
+color: #aaa;
+background-color: #eee;
+text-align: right;
+padding-right: .3em;
+font-size: 10pt;
+font-family: monospace;
+padding-top: .4em;
+}
+</style>
+{% endblock %}

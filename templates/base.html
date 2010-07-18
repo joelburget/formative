@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}{{ title }}{% endblock %}</title>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	{% block header %}{% endblock %}
+	<link rel="stylesheet" type="text/css" media="screen, projection" href="/media/css/footerstyle.css"
+</head>
+<body>
+	{% block content %}{{ content }}{% endblock %}
+	<div id="showbutton">
+		<span class="showbar"><a href="#">show bar</a></span>
+	</div>
+	<footer>
+		<div class="quickmenu">
+			<ul>
+			  <li><a href="../">Home</a></li>
+			  <li><a href="../about/">About</a></li>
+			  <li><a href="../posts/">Posts</a></li>
+			</ul>
+		</div>
+		<div class="footerleft">
+		  <span class="menu_title">
+			<a class="menutitle" href="#">Menu</a> 
+		  </span>
+		</div>
+		
+		<div class="footerright"> 
+		  <span class="hidemenu">
+		  <a href="#">Hide</a>
+		  </span>
+		</div>
+	</footer>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+{% block script %}{% endblock %}
+<script>
+	(function($) {
+	//Following code is for the menu
+	$(".menu_title a").click(function(event) {
+        if ($(".quickmenu").css("display") == "none") {
+            $(".quickmenu").fadeIn("fast");
+        }
+        else {
+            $(".quickmenu").fadeOut("fast");
+        }
+        return false;
+    });
+    $(".quickmenu a").click(function() {
+    	$(this).parent().parent().parent().addClass("dontclose");
+    })
+    $(".quickmenu").click(function(){
+        if ($(this).hasClass("dontclose")){
+	    $(this).removeClass("dontclose");
+	}
+	else{
+	    return false;
+	}
+    })
+    $(document).click(function(event) {
+    	if ($(".quickmenu").css("display") == "block"){
+	    	$(".quickmenu").fadeOut("fast");
+	        $(".quickmenu").css({
+	            "display": "none"
+	        });
+	    }
+    });
+    //end of menu code
+    
+    //start of hide code
+    $(".hidemenu a").click(function() {
+        $("footer").slideUp("fast");
+        $("#showbutton").fadeIn("slow");
+    });
+
+    $(".showbar a").click(function() {
+        $("footer").slideDown("fast");
+        $("#showbutton").fadeOut();
+    });
+    //end of hide code
+})(jQuery);
+</script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12099371-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
