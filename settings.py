@@ -3,9 +3,8 @@ import socket
 if socket.gethostname() == 'lemonaid':
   PRODUCTION = True
 
-if not PRODUCTION:
-  import os
-  import django
+import os
+import django
 
 # Django settings for website project.
 
