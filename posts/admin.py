@@ -23,8 +23,9 @@ class PostAdmin(admin.ModelAdmin):
    date_heirarchy = 'published'
    prepopulated_fields = {'slug': ('title',)}
    list_display = ('title', 'slug', 'comments', 'public', 'information', 'published', 'last_edited') 
+   list_display_links = ('title',)
    list_filter = ('published', 'last_edited')
-   list_editable = ['title', 'slug', 'comments', 'public', 'information']
+   list_editable = ['slug', 'comments', 'public', 'information']
 
    def save_model(self, request, obj, form, change):
       if not change:

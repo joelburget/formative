@@ -3,9 +3,9 @@ import sys
 sys.path.append('/home/joelburget/lib/python')
 from BeautifulSoup import BeautifulSoup
 from pygments import formatters, lexers, highlight
-import logging
-LOG_FILENAME = '/home/joelburget/website/posts/log.out'
-logging.basicConfig(filename = LOG_FILENAME, level = logging.DEBUG)
+#import logging
+#LOG_FILENAME = '/home/joelburget/website/posts/log.out'
+#logging.basicConfig(filename = LOG_FILENAME, level = logging.DEBUG)
 
 class InlineHtmlFormatter(formatters.HtmlFormatter):
     
@@ -93,7 +93,7 @@ class Post(models.Model):
 		        pre.contents = [BeautifulSoup(code_hl)]
 		        pre.name = 'div'
 		except:
-		    logging.debug(sys.exc_info())
-		    logging.debug(pre['class'])
+		    #logging.debug(sys.exc_info())
+		    #logging.debug(pre['class'])
 		    break
 	return unicode(soup)

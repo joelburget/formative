@@ -1,10 +1,23 @@
+PRODUCTION = False
+import socket
+if socket.gethostname() == 'lemonaid':
+  PRODUCTION = True
+
+if not PRODUCTION:
+  import os
+  import django
+
 # Django settings for website project.
 
-DEBUG = False
+DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+DEBUG = True
+if PRODUCTION: 
+  DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
     ('Joel Burget', 'joelburget@gmail.com'),
 )
 
@@ -36,17 +49,17 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/joelburget/public_html/media/'
+MEDIA_ROOT = os.path.join(SITE_ROOT, '../public_html/media')#'/home/joelburget/public_html/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://joelburget.ambitiouslemon.com/media/'
+MEDIA_URL = '/media/'#'http://joelburget.ambitiouslemon.com/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = 'http://joelburget.ambitiouslemon.com/media/admin/'
+ADMIN_MEDIA_PREFIX = '/media/admin/'#'http://joelburget.ambitiouslemon.com/media/admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'kmr9zs)m&3$3s4=5j7muq)a&novx3_8y#!wp&n-^(akzdw8-j-'
@@ -70,7 +83,8 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/joelburget/website/templates'
+    os.path.join(SITE_ROOT, 'templates')
+    #'/home/joelburget/website/templates'
 )
 
 INSTALLED_APPS = (
