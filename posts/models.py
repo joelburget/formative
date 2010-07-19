@@ -8,15 +8,14 @@ from pygments import formatters, lexers, highlight
 #logging.basicConfig(filename = LOG_FILENAME, level = logging.DEBUG)
 
 class InlineHtmlFormatter(formatters.HtmlFormatter):
-    
-    def wrap(self, source, outfile):
-        return self._wrap_code(source)
+  def wrap(self, source, outfile):
+    return self._wrap_code(source)
 
-    def _wrap_code(self, source):
-        yield 0, '<pre>'
-        for t in source:
-	    yield t
-	yield 0, '</pre>'
+  def _wrap_code(self, source):
+    yield 0, '<code>'
+    for t in source:
+      yield t
+    yield 0, '</code>'
 
 class StyleSheet(models.Model):
     name = models.CharField(max_length=50)
@@ -54,10 +53,10 @@ class Post(models.Model):
     body_highlighted = models.TextField(editable=False, blank=True)
 
     class Meta:
-	ordering = ['-published']
-	permissions = (
-	    ("proofread", "Proofread not yet public posts"),
-	)
+      ordering = ['-published']
+      permissions = (
+          ("proofread", "Proofread not yet public posts"),
+      )
 
     class Admin:
         pass
@@ -70,30 +69,32 @@ class Post(models.Model):
 
     def save(self):
         self.body_highlighted = self.highlight_code(self.body)
-	super(Post, self).save()
+        super(Post, self).save()
 
     def highlight_code(self, html):
-	BeautifulSoup.QUOTE_TAGS['code'] = None
-        soup = BeautifulSoup(html)
-	preblocks = soup.findAll('code')
-	for pre in preblocks:
-	    if pre.has_key('class'):
-	        try:
-		    code = ''.join([unicode(item) for item in pre.contents])
-		    if 'inline' in pre['class']:
-		        lexer = lexers.get_lexer_by_name(pre['class'].split(' ')[0])
-			formatter = InlineHtmlFormatter()
-		        code_hl = highlight(code, lexer, formatter)
-		        pre.contents = [BeautifulSoup(code_hl)]
-		        pre.name = 'div'
-		    else:
-		        lexer = lexers.get_lexer_by_name(pre['class'])
-		        formatter = formatters.HtmlFormatter(linenos='table')
-		        code_hl = highlight(code, lexer, formatter)
-		        pre.contents = [BeautifulSoup(code_hl)]
-		        pre.name = 'div'
-		except:
-		    #logging.debug(sys.exc_info())
-		    #logging.debug(pre['class'])
-		    break
-	return unicode(soup)
+      BeautifulSoup.QUOTE_TAGS['code'] = None
+      soup = BeautifulSoup(html)
+      preblocks = soup.findAll('code')
+      for pre in preblocks:
+        if pre.has_key('class'):
+          try:
+            code = ''.join([unicode(item) for item in pre.contents])
+            if 'inline' in pre['class']:
+                lexer = lexers.get_lexer_by_name(pre['class'].split(' ')[0])
+                formatter = InlineHtmlFormatter()
+                code_hl = highlight(code, lexer, formatter)
+                pre.contents = [BeautifulSoup(code_hl)]
+                pre.name = 'span'
+                print "here"
+                print pre
+            else:
+                lexer = lexers.get_lexer_by_name(pre['class'])
+                formatter = formatters.HtmlFormatter(linenos='table')
+                code_hl = highlight(code, lexer, formatter)
+                pre.contents = [BeautifulSoup(code_hl)]
+                pre.name = 'div'
+          except:
+            #logging.debug(sys.exc_info())
+            #logging.debug(pre['class'])
+            break
+      return unicode(soup)
