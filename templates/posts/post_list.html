@@ -7,7 +7,7 @@
 	{% for object in object_list %}
 	{% if object.public or perms.posts.proofread %}
 	<li>
-		<a href="/{{ object.slug }}"><h2>{{ object.title }}</h2></a>
+		<a href="/{{ object.slug }}">{{ object.title }}</a>
 		<span>Published: {{ object.published|date:"F jS, Y" }}</span>
 		<span>Last Edited: {{ object.last_edited|date:"F jS, Y" }}</span>
 	</li>

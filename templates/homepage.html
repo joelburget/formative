@@ -2,51 +2,20 @@
 
 {% block title %}Welcome!{% endblock %}
 {% block header %}
-<style>
-body{
-  font-family:Adobe Garamond, Baskerville, Garamond, Hoefler Text, Times New Roman, Times, serif;
-  font-size:14pt;
-  line-height:1.45em;
-}
-h3{
-  font-size:2.25em;
-  font-family:helvetica;
-  margin-top: 0.5em;
-  margin-bottom: 0em;
-}
-a{
-  text-decoration: none;
-  color: #7389A0;
-}
-.block{
-  width:75%;
-  background-color: #DDDDDD;
-  padding: 12px;
-  margin: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  border: 1px solid #999;
-}
-.block:last-child {
-  margin-bottom: 50px;
-}
-</style>
 {% endblock %}
 
 {% block content %}
-<div class="block">
-Welcome to Joel Burget's website. Here are my last 5 posts.
-</div>
+<div class="content">
+  <h1>Welcome to Joel Burget's website.</h1>
+  <br />
+  <h2>Here are my last 5 posts.</h2>
 {% for object in latest_post_list %}
 {% if object.public or perm.posts.proofread %}
 <div class="block">
 <a href="{{ object.slug }}/"><h3>{{ object.title }}</h3></a>
-<br />
 {{ object.body|truncatewords_html:"50"|striptags }}
 </div>
 {% endif %}
 {% endfor %}
+</div>
 {% endblock %}

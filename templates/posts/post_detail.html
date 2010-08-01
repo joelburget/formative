@@ -16,6 +16,7 @@
 {% endblock %}
 
 {% block content %}
+{% comment %}
 {% if object.information %}
 <h1 id="title">{{ object.title }}</h1>
 <h6 id="published">Published: {{ object.published|date:"F jS" }}</h6>
@@ -24,6 +25,7 @@
 {% if object.guest_author %}
 <h6 id="guest_author">By {{ object.guest_author }}</h6>
 {% endif %}
+{% endcomment %}
 {% autoescape off %}
 {% if object.body_highlighted %}
     {{ object.body_highlighted }}
