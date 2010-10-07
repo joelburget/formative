@@ -1,20 +1,18 @@
-PRODUCTION = False
 import socket
-if socket.gethostname() == 'lemonaid':
-  PRODUCTION = True
-
 import os
 import django
+
+if socket.gethostname() == 'lemonaid':
+  PRODUCTION = True
+else:
+  PRODUCTION = False
+TEMPLATE_DEBUG = not PRODUCTION
+DEBUG = not PRODUCTION
 
 # Django settings for website project.
 
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-
-DEBUG = True
-if PRODUCTION: 
-  DEBUG = False
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Joel Burget', 'joelburget@gmail.com'),

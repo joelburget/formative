@@ -4,7 +4,8 @@ from website.posts.models import Post, StyleSheet, Script
 class PostAdmin(admin.ModelAdmin):
    fieldsets = (
        (None, {
-           'fields': (('title', 'slug', 'comments', 'public', 'information'), 'additional_header')
+           'fields': (('title', 'slug', 'comments', 'public', 'information',), 'additional_header')
+           #'fields': (('title', 'slug', 'comments', 'public', 'information', 'published', 'last_edited'), 'additional_header')
        }),
        ('Styles', {
            'classes': ('collapse',),
