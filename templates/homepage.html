@@ -5,22 +5,55 @@
   <meta name="google-site-verification" content="xnYUHH_dUK5sQh_Ss5LCOZji6atQLZy1z-sAslrubZU" />
   <link href='http://fonts.googleapis.com/css?family=Cardo&subset=latin' rel='stylesheet' type='text/css'>
   <style>
-    body, h1, h2, h3, h4 {font-family: 'Cardo', arial, serif;}
+    @media screen and (min-width: 1050px) {
+      .content {
+        width: 800px;
+      }
+      .intro-p, .intro-h {
+        padding: 10px;
+      }
+      .programs {
+        float: left;
+        width: 380px;
+        padding: 10px;
+        margin: 0px;
+      }
+      .posts {
+        float: right;
+        width: 380px;
+        padding: 10px;
+        margin: 0px;
+      }
+    }
+    body, h1, h2, h3, h4 {font-family: 'Cardo', serif;}
+    /*body {
+      background-image: url('/media/texture.jpg');
+      background-attachment: fixed;
+    }*/
   </style>
 {% endblock %}
 
 {% block content %}
 <div class="content">
-  <h1>Programs That Smell Good</h1>
-  <br />
-  <h2>Here are my last 5 posts.</h2>
-{% for object in latest_post_list %}
-{% if object.public or perm.posts.proofread %}
+  <h1 class="intro-h">Programs That Smell Good</h1>
+  <p class="intro-p">The personal site of Joel Burget. I write programs that smell good. So far I've only written <a href="/cologne/">Cologne</a> but expect more in the future. I can't wait to write Popcorn. I just don't know what it's going to be yet.</p>
 <div class="block">
-<a href="{{ object.slug }}/"><h3>{{ object.title }}</h3></a>
-{{ object.body|truncatewords_html:"50"|striptags }}
+  <div class="programs">
+    <h2>Programs</h2>
+    <h3><a href="/cologne/">Cologne</a></h3>
+    <p>A ray tracer in Haskell</p>
+    <h3><a href="https://github.com/joelburget/slimlock">Slimlock</a></h3>
+    <p>A simple screen locker. I forgot to name it after something that smells good!</p>
+  </div>
+  <div class="posts">
+  <h2>Last 5 posts</h2>
+  {% for object in latest_post_list %}
+  {% if object.public or perm.posts.proofread %}
+    <h3><a href="{{ object.slug }}/">{{ object.title }}</a></h3>
+  {{ object.body|truncatewords_html:"30"|striptags }}
+  {% endif %}
+  {% endfor %}
+  </div>
 </div>
-{% endif %}
-{% endfor %}
 </div>
 {% endblock %}
