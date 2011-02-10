@@ -3,8 +3,34 @@
 {% block title %}Welcome!{% endblock %}
 {% block header %}
   <meta name="google-site-verification" content="xnYUHH_dUK5sQh_Ss5LCOZji6atQLZy1z-sAslrubZU" />
-  <link href='http://fonts.googleapis.com/css?family=Cardo&subset=latin' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato:light,regular' rel='stylesheet' type='text/css'>
   <style>
+    body {
+      background-color: #222;
+      color: white;
+      font-family: 'Lato', arial, sans-serif;
+      font-size: 13pt;
+      font-weight: 300;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Lato', arial, sans-serif;
+    }
+
+    .decorate {
+      border: 1px solid #444;
+      background-color: #555;
+      border-radius: 2px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 2px;
+      margin: 10px 10px 10px 0;
+      padding: 5px;
+    }
+
+    h3 {
+      margin-top: 10px;
+    }
+
     @media screen and (min-width: 1050px) {
       .content {
         width: 800px;
@@ -25,7 +51,6 @@
         margin: 0px;
       }
     }
-    body, h1, h2, h3, h4 {font-family: 'Cardo', serif;}
     /*body {
       background-image: url('/media/texture.jpg');
       background-attachment: fixed;
@@ -40,17 +65,23 @@
 <div class="block">
   <div class="programs">
     <h2>Programs</h2>
-    <h3><a href="/cologne/">Cologne</a></h3>
-    <p>A ray tracer in Haskell</p>
-    <h3><a href="/slimlock/">Slimlock</a></h3>
-    <p>A simple screen locker. I forgot to name it after something that smells good!</p>
+    <div class="decorate">
+      <h3><a href="/cologne/">Cologne</a></h3>
+      <p>A ray tracer in Haskell</p>
+    </div>
+    <div class="decorate">
+      <h3><a href="/slimlock/">Slimlock</a></h3>
+      <p>A simple screen locker. I forgot to name it after something that smells good!</p>
+    </div>
   </div>
   <div class="posts">
   <h2>Last 5 posts</h2>
   {% for object in latest_post_list %}
   {% if object.public or perm.posts.proofread %}
-    <h3><a href="{{ object.slug }}/">{{ object.title }}</a></h3>
-  {{ object.body|truncatewords_html:"30"|striptags }}
+    <div class="decorate">
+      <h3><a href="{{ object.slug }}/">{{ object.title }}</a></h3>
+      {{ object.body|truncatewords_html:"30"|striptags }}
+    </div>
   {% endif %}
   {% endfor %}
   </div>

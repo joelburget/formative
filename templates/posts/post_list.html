@@ -2,23 +2,121 @@
 
 {% block title %}List of Posts{% endblock %}
 {% block header %}
+<link href='http://fonts.googleapis.com/css?family=Lato:light,regular' rel='stylesheet' type='text/css'>
 <style>
-  ul {list-style-type: none;}
-  li {margin-bottom: 1em;}
+    body {
+      background-color: #222;
+      color: white;
+      font-family: 'Lato', arial, sans-serif;
+      font-size: 13pt;
+      font-weight: 300;
+    }
+
+    a {
+      font-weight: 400;
+    }
+
+    .decorate {
+      border: 1px solid #444;
+      background-color: #555;
+      border-radius: 2px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 2px;
+      margin: 10px;
+      padding: 5px;
+    }
+
+    h3 {
+      margin: 10px;
+    }
+
+    .item {
+      width: 200px;
+      height: 200px;
+    }
+
+    #sort {
+      width: 432px;
+    }
+
+    .isotope,
+    .isotope .isotope-item {
+      /* change duration value to whatever you like */
+      -webkit-transition-duration: 0.5s;
+      -moz-transition-duration: 0.5s;
+      transition-duration: 0.5s;
+    }
+
+    .isotope {
+      -webkit-transition-property: height, width;
+      -moz-transition-property: height, width;
+      transition-property: height, width;
+    }
+
+    .isotope .isotope-item {
+      -webkit-transition-property: -webkit-transform, opacity;
+      -moz-transition-property:    -moz-transform, opacity;
+      transition-property:         transform, opacity;
+    }
+
+    .isotope-item {
+      z-index: 2;
+    }
+
+    .isotope-hidden.isotope-item {
+      pointer-events: none;
+      z-index: 1;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 	<h3>Posts</h3>
-  <ul>
+  <div id='sort' class='decorate'>
+    Sort by:
+    <a href='#name'>name</a> &nbsp;
+    <a href='#published'>published</a> &nbsp;
+    <a href='#edited'>edited</a>
+  </div>
+  <ul id='container'>
     {% for object in object_list %}
     {% if object.public or perms.posts.proofread %}
-    <li>
+    <li class='item decorate'>
       <a href="/{{ object.slug }}">{{ object.title }}</a>
+      <br />
       <span>Published: {{ object.published|date:"F jS, Y" }}</span>
+      <br />
       <span>Last Edited: {{ object.last_edited|date:"F jS, Y" }}</span>
     </li>
     {% endif %}
     {% endfor %}
   </ul>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/media/js/isotope/jquery.isotope.min.js"></script>
+<script type="text/javascript">
+  $('#container').isotope({
+    itemSelector: '.item',
+    layoutMode: 'fitRows',
+    animationEngine: 'best-available',
+    sortBy: 'original-order',
+    getSortData: {
+      name: function($elem) {
+        return $elem.find('a').text().toLowerCase();
+      },
+      published: function($elem) {
+        return $elem.find('span:eq(0)').text();
+      },
+      edited: function($elem) {
+        return $elem.find('span:eq(1)').text();
+      }
+    }
+  });
+  $('#sort a').click(function() {
+    var sortName = $(this).attr('href').slice(1);
+    $('#container').isotope({sortBy: sortName});
+    return false;
+  });
+</script>
 {% endblock %}
